@@ -23,10 +23,10 @@
                     <div class="d-flex justify-content-between align-items-center px-3 mb-3">
                         <h6 class="mb-0">Liste des pharmacies : {{count($pharmacies)}}</h6>
                         <div class="d-flex gap-2">
-                            <button id="updateAllStocksBtn" type="button" class="btn btn-warning btn-sm d-flex align-items-center">
+<!--                             <button id="updateAllStocksBtn" type="button" class="btn btn-warning btn-sm d-flex align-items-center">
                                 <i class="fas fa-sync-alt me-2"></i>
                                 Mettre à jour tous les stocks
-                            </button>
+                            </button> -->
                             <button type="button" class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#newPharmacyModal">
                                 <i class="fas fa-plus me-2"></i>
                                 Nouvelle pharmacie
