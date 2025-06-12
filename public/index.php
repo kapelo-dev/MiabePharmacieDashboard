@@ -1,5 +1,8 @@
 <?php
 
+ini_set('max_execution_time', 18000);
+set_time_limit(18000);
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 

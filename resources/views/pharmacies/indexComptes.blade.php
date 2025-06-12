@@ -22,7 +22,12 @@
                 <div class="card-body px-0 pb-2">
                     <div class="d-flex justify-content-between align-items-center px-3 mb-3">
                         <h6 class="mb-0">Liste des pharmacies : {{ count($pharmacies) }}</h6>
-                        
+                        <form action="{{ route('pharmacies.generateAllAccounts') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn bg-gradient-info">
+                                <i class="fa fa-key"></i> Générer tous les comptes
+                            </button>
+                        </form>
                     </div>
                     <div class="mt-3 ps-3">
                             <input type="text" id="searchPharmacy" class="form-control" placeholder="Rechercher une pharmacie...">

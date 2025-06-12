@@ -23,8 +23,15 @@ Route::get('/users', [UsersController::class, 'index'])->name('users.index');
 Route::post('/users', [UsersController::class, 'store'])->name('users.store');
 
 Route::get('/comptes', [PharmaciesController::class, 'indexComptes'])->name('pharmacies.indexComptes');
-Route::resource('pharmacies', PharmaciesController::class);
+
+// Routes pour les pharmacies
+Route::get('/pharmacies', [PharmaciesController::class, 'index'])->name('pharmacies.index');
+Route::post('/pharmacies', [PharmaciesController::class, 'store'])->name('pharmacies.store');
+Route::put('/pharmacies/{id}', [PharmaciesController::class, 'update'])->name('pharmacies.update');
+Route::delete('/pharmacies/{id}', [PharmaciesController::class, 'destroy'])->name('pharmacies.destroy');
 Route::post('/pharmacies/addPharmacien/{pharmacyId}', [PharmaciesController::class, 'addPharmacien'])->name('pharmacies.addPharmacien');
+Route::post('/pharmacies/generate-all-accounts', [PharmaciesController::class, 'generateAllAccounts'])->name('pharmacies.generateAllAccounts');
+Route::post('/pharmacies/update-all-stocks', [PharmaciesController::class, 'updateAllStocks'])->name('pharmacies.updateAllStocks');
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [LoginController::class, 'login'])->name('login');

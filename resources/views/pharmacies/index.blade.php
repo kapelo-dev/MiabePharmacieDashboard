@@ -22,10 +22,16 @@
                 <div class="card-body px-0 pb-2">
                     <div class="d-flex justify-content-between align-items-center px-3 mb-3">
                         <h6 class="mb-0">Liste des pharmacies : {{count($pharmacies)}}</h6>
-                        
-                        <button type="button" class="btn bg-gradient-dark w-10 mb-0 toast-btn" data-bs-toggle="modal" data-bs-target="#newPharmacyModal">
-                            Nouveau
-                        </button>
+                        <div class="d-flex gap-2">
+                            <button id="updateAllStocksBtn" type="button" class="btn btn-warning btn-sm d-flex align-items-center">
+                                <i class="fas fa-sync-alt me-2"></i>
+                                Mettre à jour tous les stocks
+                            </button>
+                            <button type="button" class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#newPharmacyModal">
+                                <i class="fas fa-plus me-2"></i>
+                                Nouvelle pharmacie
+                            </button>
+                        </div>
                     </div>
                     <div class="mt-3 ps-3">
                         <input type="text" id="searchPharmacy" class="form-control" placeholder="Rechercher une pharmacie..." style="width: 200px; height: 30px; border: 2px solid #000; padding: 5px;">
@@ -266,6 +272,7 @@
         const searchInput = document.getElementById('searchPharmacy');
         const tableRows = document.querySelectorAll('#pharmacyTable tr');
 
+        // Gestionnaire de recherche
         searchInput.addEventListener('keyup', function () {
             const filter = searchInput.value.toLowerCase();
             tableRows.forEach(row => {
@@ -279,6 +286,43 @@
                 row.style.display = match ? '' : 'none';
             });
         });
+
+        // Gestionnaire de mise à jour des stocks
+        const updateStocksBtn = document.getElementById('updateAllStocksBtn');
+        if (updateStocksBtn) {
+            updateStocksBtn.addEventListener('click', function() {
+                if(confirm('Êtes-vous sûr de vouloir mettre à jour tous les stocks de toutes les pharmacies ?')) {
+                    console.log('Début de la mise à jour des stocks...');
+                    fetch("{{ route('pharmacies.updateAllStocks') }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(response => {
+                        console.log('Réponse reçue:', response);
+                        if (!response.ok) {
+                            throw new Error('Erreur réseau: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Données reçues:', data);
+                        alert(data.message);
+                        if (data.success) {
+                            // Optionnel : rafraîchir la page après la mise à jour
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        alert('Erreur lors de la mise à jour des stocks: ' + error.message);
+                    });
+                }
+            });
+        }
 
         // Initialiser la carte OpenStreetMap
         const map = L.map('map').setView([6.1767, 1.2064], 13);
